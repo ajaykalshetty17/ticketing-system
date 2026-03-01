@@ -39,7 +39,16 @@ def send_email(to_email, subject, body):
             from_email=os.environ.get("EMAIL_USER"),
             to_emails=to_email,
             subject=subject,
-            html_content=body
+            html_content=f"""
+            <html>
+                <body>
+                    <h2>Support Ticket Update</h2>
+                    <p>{body.replace('\n', '<br>')}</p>
+                    <br>
+                    <p>Regards,<br>Support Team</p>
+                </body>
+            </html>
+            """
         )
 
         sg = SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
@@ -148,11 +157,20 @@ def update_status():
             updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             sheet.update_cell(index + 2, 12, updated_at)
 
-            # send_email(
-            #     row["Email"],
-            #     f"Ticket Update - {ticket_id}",
-            #     f"Hello {row['Name']},\n\nYour ticket status changed to: {new_status}\n\nThank you."
-            # )
+           send_email(
+    row["Email"],
+    f"Ticket Update - {ticket_id}",
+    f"""
+Hello {row['Name']},
+
+Your ticket status has been updated.
+
+Ticket ID: {ticket_id}
+New Status: {new_status}
+
+Thank you.
+"""
+)
             break
 
     return redirect("/admin")
@@ -160,6 +178,7 @@ def update_status():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
