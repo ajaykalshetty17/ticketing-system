@@ -58,7 +58,7 @@ def send_email(to_email, subject, body):
 
     except Exception as e:
         print("Email failed:", e)
-        
+
 
 # ---------------------------
 # Generate Ticket ID
@@ -119,9 +119,9 @@ def admin():
         records = [
             r for r in all_records
             if search_query == r["TicketID"].lower()
-            or search_query == r["Email"].lower()
-            or search_query in r["Subject"].lower()
-            or search_query in r["Name"].lower()
+               or search_query == r["Email"].lower()
+               or search_query in r["Subject"].lower()
+               or search_query in r["Name"].lower()
         ]
     else:
         records = all_records
@@ -157,28 +157,27 @@ def update_status():
             updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             sheet.update_cell(index + 2, 12, updated_at)
 
-           send_email(
-    row["Email"],
-    f"Ticket Update - {ticket_id}",
-    f"""
-Hello {row['Name']},
+        send_email(
+            row["Email"],
+            f"Ticket Update - {ticket_id}",
+            f"""
+        Hello {row['Name']},
 
-Your ticket status has been updated.
+        Your ticket status has been updated.
 
-Ticket ID: {ticket_id}
-New Status: {new_status}
+        Ticket ID: {ticket_id}
+        New Status: {new_status}
 
-Thank you.
-"""
-)
-            break
+        Thank you.
+        """
+        )
+        break
+
 
     return redirect("/admin")
 
-
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
 
