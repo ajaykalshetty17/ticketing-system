@@ -82,17 +82,17 @@ def submit_ticket():
         "Open", "", created_at, created_at
     ])
 
-    # send_email(
-    #     email,
-    #     f"Ticket Received - {ticket_id}",
-    #     f"Hello {name},\n\nWe received your ticket.\nTicket ID: {ticket_id}\nSubject: {subject}\n\nThank you."
-    # )
+    send_email(
+        email,
+        f"Ticket Received - {ticket_id}",
+        f"Hello {name},\n\nWe received your ticket.\nTicket ID: {ticket_id}\nSubject: {subject}\n\nThank you."
+    )
 
-    # send_email(
-    #     os.environ.get("EMAIL_USER"),
-    #     f"New Ticket - {ticket_id}",
-    #     f"New ticket created.\nTicket ID: {ticket_id}\nSubject: {subject}\nPriority: {priority}"
-    # )
+    send_email(
+        os.environ.get("EMAIL_USER"),
+        f"New Ticket - {ticket_id}",
+        f"New ticket created.\nTicket ID: {ticket_id}\nSubject: {subject}\nPriority: {priority}"
+    )
 
     return render_template("success.html", ticket_id=ticket_id)
 
@@ -156,4 +156,5 @@ def update_status():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
