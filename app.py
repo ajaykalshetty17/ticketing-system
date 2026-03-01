@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect
 import gspread
 from google.oauth2 import service_account
 import datetime
-# import smtplib
-# from email.mime.text import MIMEText
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import os
@@ -34,19 +32,6 @@ sheet = client.open("tickets").sheet1
 # Email Function (Secure - from ENV)
 # ---------------------------
 
-# def send_email(to_email, subject, body):
-#     sender_email = os.environ.get("EMAIL_USER")
-#     sender_password = os.environ.get("EMAIL_PASS")
-
-#     msg = MIMEText(body)
-#     msg["Subject"] = subject
-#     msg["From"] = sender_email
-#     msg["To"] = to_email
-
-#     server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-#     server.login(sender_email, sender_password)
-#     server.sendmail(sender_email, to_email, msg.as_string())
-#     server.quit()
 
 def send_email(to_email, subject, body):
     try:
@@ -175,6 +160,7 @@ def update_status():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
